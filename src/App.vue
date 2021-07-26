@@ -1,13 +1,15 @@
 <template>
-  <div id="app">
+  <div id="app" class="border-solid border-t-3 border-green-border">
     <header id="header">
       <router-link class="creative-market-logo" to="/step-1">
         <span class="block w-24"></span>
       </router-link>
     </header>
     <main id="main" role="main">
-      <section>
-        <router-view/>
+      <section class="content">
+        <div class="card rounded-lg shadow border-solid border border-cool-gray-4">
+          <router-view />
+        </div>
       </section>
     </main>
   </div>
