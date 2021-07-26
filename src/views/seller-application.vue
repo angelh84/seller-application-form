@@ -50,7 +50,7 @@
         </div>
         <div class="mb-6">
           <p>
-            <label class="flex items-center -mt-3.5">
+            <label class="flex items-start sm:items-center -mt-3.5">
               <t-checkbox name="options" value="authored-check" />
               <span class="ml-2 font-normal text-base">Yes, I confirm that the content I submit is authored by me.</span>
             </label>

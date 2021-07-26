@@ -5,16 +5,21 @@
       'h-full',
       'flex flex-col',
       'bg-contain bg-no-repeat bg-bottom',
-      'border-solid border-t-3 border-green-border',
+      'md:border-solid md:border-t-3 md:border-green-border',
       'text-base',
       'font-sans antialiased'
     ]"
     :style="{'background-image': `url(${require('./assets/bg.png')})`}"
   >
     <header id="header">
-      <div class="pt-4 pl-14 mb-36">
+      <div :class="[
+        'relative',
+        'pt-6 md:pt-4 pb-6', 
+        'md:pl-14 md:mb-36',
+        'shadow-header-mobile md:shadow-none'
+      ]">
         <router-link 
-          class="creative-market-logo" 
+          class="flex justify-center md:block" 
           to="/step-1"
         >
           <img 
@@ -32,7 +37,7 @@
       <section class="content">
         <div :class="[
           'md:w-form-container',
-          'p-6 sm:p-10',
+          'pl-6 pr-6 pt-10 pb-10 sm:p-10',
           'mx-auto',
           'md:rounded-lg',
           'md:shadow',

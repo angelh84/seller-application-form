@@ -7,7 +7,8 @@ module.exports = {
         'sans': ['Helvetica', 'Arial', 'sans-serif']
       },
       boxShadow: {
-        DEFAULT: '0px 2px 10px rgba(226, 233, 238, 0.6)'
+        DEFAULT: '0px 2px 10px rgba(226, 233, 238, 0.6)',
+        'header-mobile': '0px 4px 8px rgba(0, 0, 0, 0.1)'
       },
       colors: {
         'cool-gray': {
