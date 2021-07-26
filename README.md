@@ -1,21 +1,18 @@
 # seller-application-form
 
-## Project setup
-```
-yarn install
-```
+1. Clone down the repository
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+    ```bash
+    git clone https://github.com/angelh84/seller-application-form.git
+    ```
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+2. Enter the repo directory
 
-### Lints and fixes files
-```
-yarn run lint
-```
+    ```bash
+    cd seller-application-form
+    ```
+
+3. Install the dependencies (requires Node v. >=11.10.1)
+
+    ```bash
+    npm install
