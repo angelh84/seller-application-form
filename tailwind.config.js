@@ -3,6 +3,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily: {
+        'sans': ['Helvetica', 'Arial', 'sans-serif']
+      },
       boxShadow: {
         DEFAULT: '0px 2px 10px rgba(226, 233, 238, 0.6)'
       },
@@ -19,6 +22,9 @@ module.exports = {
       },
       borderWidth: {
         '3': '3px'
+      },
+      width: {
+        'form-container': '657px'
       }
     },
   },
