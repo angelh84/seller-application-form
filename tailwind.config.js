@@ -18,14 +18,20 @@ module.exports = {
         },
         'neutral-gray': '#FBFBFD',
         'mock-green': '#008980',
-        'green-border': '#8BA753'
+        'green-border': '#8BA753',
+        'teal': {
+          4: '#39B4AC'
+        }
       },
       borderWidth: {
         '3': '3px'
       },
       width: {
         'form-container': '657px'
-      }
+      },
+      backgroundImage: () => ({
+        'radio-bg': "url(\"data:image/svg+xml,<svg viewBox='0 0 16 16' fill='%23008980' xmlns='http://www.w3.org/2000/svg'><circle cx='8' cy='8' r='2'/></svg>\")"
+      })
     },
   },
   variants: {

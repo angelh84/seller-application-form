@@ -32,11 +32,11 @@
       <section class="content">
         <div :class="[
           'md:w-form-container',
-          'p-10',
+          'p-6 sm:p-10',
           'mx-auto',
-          'rounded-lg',
-          'shadow',
-          'border border-solid border-cool-gray-4',
+          'md:rounded-lg',
+          'md:shadow',
+          'md:border md:border-solid md:border-cool-gray-4',
           'bg-white'
         ]">
           <router-view />
