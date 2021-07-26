@@ -3,45 +3,51 @@
     <h1>Seller Application</h1>
     <h2>{{ copy.title }}</h2>
     <Steps :text="stepsText" />
-    <p :class="{
-      'font-semibold': currentStep === '2'
-      }"
-    >
+    <p :class="[
+      {'font-semibold': currentStep === '2'},
+      'mb-5'
+    ]">
       {{ copy.description }}
     </p>
 
     <form>
       <fieldset>
-        <div class="">
-          <p>
+        <div class="mb-5 flex flex-row">
+          <p class="w-1/2 pr-3">
             <label for="first-name">First Name</label>
             <t-input id="first-name" value="" name="first-name" />
           </p>
-          <p>
+          <p class="w-1/2 pl-3">
             <label for="last-name">Last Name</label>
             <t-input id="last-name" value="" name="last-name" />
           </p>
         </div>
-        <p>
-          <label for="category">Your Shop Category</label>
-          <t-select
-            id="cateogry"
-            placeholder="Select Category"
-            :options="[
-              'Graphics', 
-              'Fonts', 
-              'Templates', 
-              'Add-ons', 
-              'Photos', 
-              'Web Themes', 
-              '3D'
-            ]"
-          ></t-select>
-        </p>
-        <p>
-          <label for="size_3">Large</label>
-          <input type="radio" name="size" id="size_3" value="large">
-        </p>
+        <div class="mb-5">
+          <p>
+            <label for="category">Your Shop Category</label>
+            <t-select
+              id="cateogry"
+              v-model="categoryValue"
+              :class="{'text-cool-gray-8': categoryValue === ''}"
+              placeholder="Select Category"
+              :options="[
+                'Graphics', 
+                'Fonts', 
+                'Templates', 
+                'Add-ons', 
+                'Photos', 
+                'Web Themes', 
+                '3D'
+              ]"
+            ></t-select>
+          </p>
+        </div>
+        <div class="mb-5">
+          <p>
+            <label for="portfolio-link">Portfolio Link</label>
+            <t-input id="portfolio-link" value="" name="portfolio-link" />
+          </p>
+        </div>
       </fieldset>
       <fieldset>
 
@@ -56,6 +62,11 @@ export default {
   name: 'Profile',
   components: {
     Steps
+  },
+  data () {
+    return {
+      categoryValue: ""
+    }
   },
   computed: {
     stepsLength () {

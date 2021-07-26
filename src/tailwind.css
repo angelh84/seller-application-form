@@ -15,4 +15,7 @@
   h2 {
     @apply text-2xl font-semibold mb-6;
   }
+  label {
+    @apply text-xs font-semibold;
+  }
 }

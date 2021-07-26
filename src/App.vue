@@ -36,7 +36,8 @@
           'mx-auto',
           'rounded-lg',
           'shadow',
-          'border border-solid border-cool-gray-4'
+          'border border-solid border-cool-gray-4',
+          'bg-white'
         ]">
           <router-view />
         </div>
