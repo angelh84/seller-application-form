@@ -45,10 +45,17 @@
         <div class="mb-6">
           <p>
             <label for="portfolio-link">Portfolio Link</label>
-            <t-input id="portfolio-link" value="" name="portfolio-link" />
+            <t-input 
+              id="portfolio-link" 
+              v-model="portfolioUrl" 
+              name="portfolio-link" 
+            />
           </p>
         </div>
-        <div class="mb-6">
+        <div 
+          v-if="urlTest"
+          class="mb-6"
+        >
           <p>
             <label class="flex items-start sm:items-center -mt-3.5">
               <t-checkbox name="options" value="authored-check" />
@@ -99,13 +106,14 @@
 <script>
 import Steps from '@/components/steps.vue'
 export default {
-  name: 'Profile',
+  name: 'SellerApplication',
   components: {
     Steps
   },
   data () {
     return {
-      categoryValue: ""
+      categoryValue: '',
+      portfolioUrl: ''
     }
   },
   computed: {
@@ -138,6 +146,10 @@ export default {
               description: ''
             }
       }
+    },
+    urlTest() {
+      const validUrl = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi
+      return validUrl.test(this.portfolioUrl)
     }
   }
 }

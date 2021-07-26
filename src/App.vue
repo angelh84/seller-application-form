@@ -15,7 +15,7 @@
       <div :class="[
         'relative',
         'pt-6 md:pt-4 pb-6', 
-        'md:pl-14 md:mb-36',
+        'md:pl-14 md:mb-32',
         'shadow-header-mobile md:shadow-none'
       ]">
         <router-link 
