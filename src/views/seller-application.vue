@@ -283,6 +283,7 @@
     </form>
     <t-modal
       header=""
+      :clickToClose="false"
       v-model="showModal"
     >
       <template v-slot:default>
@@ -392,7 +393,21 @@ export default {
     },
     duplicateEntry() {
       this.showModal = false
+      this.clearForm()
       this.backClickHandler()
+    },
+    clearForm () {
+      let appData = this.applicationData
+      appData.firstName = ''
+      appData.lastName = ''
+      appData.categoryValue = ''
+      appData.portfolioUrl = ''
+      appData.hasOnlineStore = null
+      appData.isAuthor = null
+      appData.storeUrls = ''
+      appData.describeQuality = ''
+      appData.experience = ''
+      appData.understanding = ''
     }
   }
 }
