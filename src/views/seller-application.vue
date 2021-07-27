@@ -272,7 +272,23 @@
           </t-button>
         </div>
       </fieldset>
-    </form>    
+    </form>
+    <t-modal
+  header="Title of the modal"
+  ref="modal"
+>
+  Content of the modal.
+  <template v-slot:footer>
+    <div class="flex justify-between">
+      <t-button type="button">
+        Cancel
+      </t-button>
+      <t-button type="button">
+        Ok
+      </t-button>
+    </div>
+  </template>
+</t-modal>
   </div>
 </template>
 
@@ -357,7 +373,8 @@ export default {
         if (!!(this.$refs.error2) === false) {
           this.showValidation = false
           // TODO AJAX save to DB
-          this.$router.push('/thank-you')
+          // this.$router.push('/thank-you')
+          this.$refs.modal.show()
         }
       })
     }
