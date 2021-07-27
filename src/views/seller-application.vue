@@ -261,7 +261,7 @@
         </div>
         <div class="flow-root mt-3">
           <t-button 
-            type="button"
+            type="submit"
             class="mx-auto w-full sm:w-auto font-semibold bg-mock-green sm:float-right pl-9 pr-9"
             @click="submitClickHandler"
           >

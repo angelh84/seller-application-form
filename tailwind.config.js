@@ -31,7 +31,8 @@ module.exports = {
         'form-container': '657px'
       },
       backgroundImage: () => ({
-        'radio-bg': "url(\"data:image/svg+xml,<svg viewBox='0 0 16 16' fill='%23008980' xmlns='http://www.w3.org/2000/svg'><circle cx='8' cy='8' r='2'/></svg>\")"
+        'radio-bg': "url(\"data:image/svg+xml,<svg viewBox='0 0 16 16' fill='%23008980' xmlns='http://www.w3.org/2000/svg'><circle cx='8' cy='8' r='2'/></svg>\")",
+        'app-bg': "url('./assets/bg.png')"
       })
     },
   },

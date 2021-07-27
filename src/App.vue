@@ -9,7 +9,6 @@
       'text-base',
       'font-sans antialiased'
     ]"
-    :style="{'background-image': `url(${require('./assets/bg.png')})`}"
   >
     <header id="header">
       <div :class="[
@@ -38,7 +37,7 @@
         <div :class="[
           'md:w-form-container',
           'pl-6 pr-6 pt-10 pb-10 sm:p-10',
-          'mx-auto',
+          'mx-auto mb-20',
           'md:rounded-lg',
           'md:shadow',
           'md:border md:border-solid md:border-cool-gray-4',

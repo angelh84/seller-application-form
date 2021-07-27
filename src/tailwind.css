@@ -7,7 +7,7 @@
     @apply h-full
   }
   body {
-    @apply h-full text-cool-gray-10
+    @apply h-full text-cool-gray-10 bg-app-bg bg-no-repeat bg-bottom bg-fixed
   }
   h1 {
     @apply text-xs font-semibold pr-24 mb-2 uppercase;
