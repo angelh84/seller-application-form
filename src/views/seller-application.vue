@@ -82,15 +82,15 @@
             <t-input 
               id="portfolio-link" 
               v-model="applicationData.portfolioUrl" 
-              :variant="!applicationData.portfolioUrl.length && showValidation ? 'danger' : ''"
+              :variant="(!applicationData.portfolioUrl.length || !urlTest) && showValidation ? 'danger' : ''"
               name="portfolio-link"
             />
             <span
               ref="error1"
-              v-if="!applicationData.portfolioUrl.length && showValidation"
+              v-if="(!applicationData.portfolioUrl.length || !urlTest) && showValidation"
               class="absolute bottom-0 left-0 text-red-500"
             >
-              <small>Required</small>
+              <small>{{ !applicationData.portfolioUrl.length ? 'Required' : 'Not a properly formatted url'}}</small>
             </span>
           </p>
         </div>
