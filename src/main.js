@@ -106,10 +106,10 @@ const settings = {
       classes: {
         overlay: 'bg-black',
         wrapper: '',
-        modal: 'bg-white shadow',
+        modal: 'bg-white',
         body: 'p-3',
-        header: 'border-gray-100',
-        footer: 'bg-gray-100',
+        header: 'bg-gray-100 font-semibold',
+        footer: '',
         close: 'bg-gray-100 text-gray-600 hover:bg-gray-200',
         closeIcon: 'fill-current h-4 w-4',
         overlayEnterClass: 'opacity-0',

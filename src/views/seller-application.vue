@@ -252,8 +252,15 @@
           </p>
         </div>
         <div class="flow-root mt-3">
+          <t-button 
+            type="button"
+            class="mx-auto w-full sm:w-auto font-semibold bg-mock-green sm:float-right pl-9 pr-9"
+            @click="submitClickHandler"
+          >
+            Submit Application
+          </t-button>
           <router-link 
-            class="flex justify-center md:block float-left mt-3" 
+            class="flex justify-center md:block sm:float-left mt-3" 
             to="/step-1"
            >
             <img 
@@ -263,32 +270,28 @@
             />
             <span class="text-mock-green inline">Back</span>
           </router-link>
-          <t-button 
-            type="button"
-            class="font-semibold bg-mock-green float-right"
-            @click="submitClickHandler"
-          >
-            Submit Application
-          </t-button>
         </div>
       </fieldset>
     </form>
     <t-modal
-  header="Title of the modal"
-  ref="modal"
->
-  Content of the modal.
-  <template v-slot:footer>
-    <div class="flex justify-between">
-      <t-button type="button">
-        Cancel
-      </t-button>
-      <t-button type="button">
-        Ok
-      </t-button>
-    </div>
-  </template>
-</t-modal>
+      header=""
+      v-model="showModal"
+    >
+      <template v-slot:default>
+        <p>It look like we already have an entry for <strong>{{ applicationData.firstName }} {{ applicationData.lastName }}</strong>, please try again.</p>
+      </template>
+      <template v-slot:footer>
+        <div class="flex justify-end">
+          <t-button 
+            type="button"
+            class="font-semibold bg-mock-green"
+            @click="duplicateEntry"
+          >
+            Ok
+          </t-button>
+        </div>
+      </template>
+    </t-modal>
   </div>
 </template>
 
@@ -302,6 +305,7 @@ export default {
   data () {
     return {
       showValidation: false,
+      showModal: false,
       applicationData: {
         firstName: '',
         lastName: '',
@@ -374,9 +378,13 @@ export default {
           this.showValidation = false
           // TODO AJAX save to DB
           // this.$router.push('/thank-you')
-          this.$refs.modal.show()
+          this.showModal = true
         }
       })
+    },
+    duplicateEntry() {
+      this.showModal = false
+      this.backClickHandler()
     }
   }
 }
