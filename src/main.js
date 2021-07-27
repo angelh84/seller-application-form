@@ -39,7 +39,7 @@ const settings = {
       fixedClasses: 'block w-full px-3 py-2 transition duration-100 ease-in-out border rounded shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed',
       classes: 'bg-neutral-gray text-cool-gray-10 placeholder-cool-gray-8 bg-white border-cool-gray-7 focus:border-blue-500 ',
       variants: {
-        danger: 'border-red-300 bg-red-50 placeholder-red-200 text-red-900',
+        danger: 'border-red-300 bg-red-50',
         success: 'border-green-300 bg-green-50 placeholder-gray-400 text-green-900'
       }
     }
@@ -61,8 +61,8 @@ const settings = {
       fixedClasses: 'transition duration-100 ease-in-out shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed',
       classes: 'text-white border-cool-gray-7 border-2 w-5 h-5',
       variants: {
-        error: 'text-red-500 border-red-300',
-        success: 'text-green-500 border-green-300'
+        error: 'text-red-500 border-red-300 border-2 w-5 h-5',
+        success: 'text-green-500 border-green-300 border-2 w-5 h-5'
       }
     }
   },
@@ -72,8 +72,8 @@ const settings = {
       fixedClasses: 'transition duration-100 ease-in-out rounded shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed',
       classes: 'text-mock-green border-cool-gray-7 border-2 w-5 h-5',
       variants: {
-        error: 'text-red-500 border-red-300',
-        success: 'text-green-500 border-green-300'
+        error: 'text-red-500 border-red-300 border-2 w-5 h-5',
+        success: 'text-green-500 border-green-300 border-2 w-5 h-5'
       }
     }
   },
@@ -81,11 +81,11 @@ const settings = {
     component: TButton,
     props: {
       fixedClasses: 'block px-4 py-3 transition duration-100 ease-in-out focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed',
-      classes: 'text-white bg-blue-500 border border-transparent shadow-sm rounded hover:bg-teal-4',
+      classes: 'text-white border border-transparent rounded hover:bg-teal-4',
       variants: {
-        secondary: 'text-gray-800 bg-white border border-gray-300 shadow-sm hover:text-gray-600',
-        error: 'text-white bg-red-500 border border-transparent rounded shadow-sm hover:bg-red-600',
-        success: 'text-white bg-green-500 border border-transparent rounded shadow-sm hover:bg-green-600',
+        secondary: 'text-gray-800 border border-gray-300  hover:text-gray-600',
+        error: 'text-white bg-red-500 border border-transparent rounded hover:bg-red-600',
+        success: 'text-white bg-green-500 border border-transparent rounded  hover:bg-green-600',
         link: 'text-blue-500 underline hover:text-blue-600'
       }
     }
