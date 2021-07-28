@@ -7,10 +7,15 @@ const routes = [
   {
     path: '/',
     name: 'Root',
-    redirect: '/step-1'
+    redirect: '/application/new/step-1'
   },
   {
-    path: '/step-1',
+    path: '/thank-you',
+    name: 'ThankYou',
+    component: () => import(/* webpackChunkName: "ThankYou" */ '../views/thank-you.vue')
+  },
+  {
+    path: '/application/:id/step-1',
     name: 'Step1',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -18,14 +23,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "Step1" */ '../views/seller-application.vue')
   },
   {
-    path: '/step-2',
+    path: '/application/:id/step-2',
     name: 'Step2',
     component: () => import(/* webpackChunkName: "Step2" */ '../views/seller-application.vue')
   },
   {
-    path: '/thank-you',
-    name: 'ThankYou',
-    component: () => import(/* webpackChunkName: "ThankYou" */ '../views/thank-you.vue')
+    path: '*',
+    name: '',
+    redirect: '/application/new/step-1'
   }
 ]
 

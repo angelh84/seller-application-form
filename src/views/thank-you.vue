@@ -20,6 +20,6 @@
 
 <script>
 export default {
-  name: 'Success'
+  name: 'ThankYou'
 }
 </script>

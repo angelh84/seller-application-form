@@ -261,7 +261,7 @@
         </div>
         <div class="flow-root mt-3">
           <t-button 
-            type="submit"
+            type="button"
             class="mx-auto w-full sm:w-auto font-semibold bg-mock-green sm:float-right pl-9 pr-9"
             @click="submitClickHandler"
           >
@@ -269,7 +269,7 @@
           </t-button>
           <router-link 
             class="flex justify-center md:block sm:float-left mt-3" 
-            to="/step-1"
+            to="step-1"
            >
             <img 
               class="block w-7 transform rotate-90 inline"
@@ -329,14 +329,28 @@ export default {
       }
     }
   },
+  watch: {
+    $route () {
+      this.populate()
+    }
+  },
   computed: {
+    routeParam () {
+      return this.$route.params.id
+    },
+    applications () {
+      return this.$store.state.applications
+    },
+    existingApplication () {
+      return this.applications.filter(app => app.id === this.routeParam)
+    },
     stepsLength () {
       return this.$router.options.routes.filter(route => {
         return route.name.toLowerCase().includes('step')
       }).length
     },
     currentStep () {
-      return this.$route.path.split('-')[1]
+      return this.$route.path.split('step-')[1]
     },
     stepsText () {
       return `${this.currentStep} of ${this.stepsLength}`
@@ -372,12 +386,12 @@ export default {
         // if there are no errors, push the router to next step
         if (!!(this.$refs.error1) === false) {
           this.showValidation = false
-          this.$router.push('/step-2')
+          this.$router.push('step-2')
         }
       })
     },
     backClickHandler () {
-      this.$router.push('/step-1')
+      this.$router.push('step-1')
     },
     submitClickHandler () {
       this.showValidation = true
@@ -386,8 +400,9 @@ export default {
         if (!!(this.$refs.error2) === false) {
           this.showValidation = false
           // TODO AJAX save to DB
-          // this.$router.push('/thank-you')
-          this.showModal = true
+          // this.showModal = true
+          this.$store.dispatch('addApplication', this.$data.applicationData)
+          this.$router.push('/thank-you')
         }
       })
     },
@@ -408,7 +423,15 @@ export default {
       appData.describeQuality = ''
       appData.experience = ''
       appData.understanding = ''
+    },
+    populate () {
+      if (this.existingApplication.length) {
+        Object.assign(this.$data.applicationData, this.existingApplication[0])
+      }
     }
+  },
+  created () {
+    this.populate()
   }
 }
 </script>

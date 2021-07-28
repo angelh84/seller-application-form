@@ -19,7 +19,7 @@
       ]">
         <router-link 
           class="flex justify-center md:block" 
-          to="/step-1"
+          to="step1"
         >
           <img 
             class="block w-24"
