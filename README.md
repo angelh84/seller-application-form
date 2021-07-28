@@ -43,7 +43,7 @@ f. I attempted to sign up and setup a Fauna DB but was unsuccessful after a legt
 
 1. Create: A user can be created with all required fields and will land on the thank you page. 
 
-2. Read: Once on the thank you page, the logo can be clicked to arrive back on step 1 and to populate your existing information, update the url by replacing the /new/ part of the url to /{firstName-lastName}/.  (So for me it would be /angel-hernandez/)
+2. Read: Once on the thank you page, the logo can be clicked to arrive back on step 1. To populate existing information, update the url by replacing the /new/ part of the url to /{firstName-lastName}/.  So for me it would be /angel-hernandez/, or whatever first and last name that was used.
 
 3. Update: Once you have completed step 2, the form should be populated with the corresponding information and will allow you to update any fields and save the form all over again.  
 
