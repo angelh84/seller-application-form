@@ -53,4 +53,6 @@ f. I attempted to sign up and setup a Fauna DB but was unsuccessful after a legt
 
 ## Conclusion
 
-Hooking the data up to an endpoint would be trivial at this point, the problem was getting Fauna DB to work locally for me but setting up a fetch / axios call to save, retrieve and update this information would be easy.
+Hooking the data up to an endpoint would be trivial at this point, the problem was getting Fauna DB to work locally for me but setting up a fetch / axios call to save, retrieve and update this information would be simple.
+
+Thanks for reading.
