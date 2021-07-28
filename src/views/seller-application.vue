@@ -287,16 +287,24 @@
       v-model="showModal"
     >
       <template v-slot:default>
-        <p>It look like we already have an entry for <strong>{{ applicationData.firstName }} {{ applicationData.lastName }}</strong>, please try again.</p>
+        <p>It look like we already have an entry for <strong>{{ applicationData.firstName }} {{ applicationData.lastName }}</strong>, would you like to start over?</p>
       </template>
       <template v-slot:footer>
         <div class="flex justify-end">
           <t-button 
             type="button"
-            class="font-semibold bg-mock-green"
+            class="text-black bg-cool-gray-4 rounded mr-4 pl-8 pr-8"
+            variant="link"
+            @click="showModal = false"
+          >
+            No
+          </t-button>
+          <t-button 
+            type="button"
+            class="font-semibold bg-mock-green pl-8 pr-8"
             @click="duplicateEntry"
           >
-            Ok
+            Yes, start over
           </t-button>
         </div>
       </template>
@@ -306,6 +314,7 @@
 
 <script>
 import Steps from '@/components/steps.vue'
+
 export default {
   name: 'SellerApplication',
   components: {
@@ -316,6 +325,7 @@ export default {
       showValidation: false,
       showModal: false,
       applicationData: {
+        id: '',
         firstName: '',
         lastName: '',
         categoryValue: '',
@@ -331,7 +341,12 @@ export default {
   },
   watch: {
     $route () {
-      this.populate()
+      // only populate form if this is a new form
+      // and there is an existing entry id in the 
+      // store that matches the route param id
+      if (!this.applicationData.id && this.existingApplication.length) {
+        this.populate()
+      }
     }
   },
   computed: {
@@ -394,15 +409,36 @@ export default {
       this.$router.push('step-1')
     },
     submitClickHandler () {
+      let hasExistingName = false
+      let appData = this.applicationData
+      let firstName = appData.firstName.trim().toLowerCase()
+      let lastName = appData.lastName.trim().toLowerCase()
+
+      // TODO AJAX save to DB
+
+      // create form id by firstname-lastname
+      appData.id = `${firstName}-${lastName}`
+
+      // check to see if there are any existing entries in the store 
+      // that have the same id as the current form
+      hasExistingName = !!(this.applications.filter(app => app.id === appData.id).length)
+
       this.showValidation = true
       this.$nextTick(() => {
-        // if there are no errors, push the router to next step
         if (!!(this.$refs.error2) === false) {
           this.showValidation = false
-          // TODO AJAX save to DB
-          // this.showModal = true
-          this.$store.dispatch('addApplication', this.$data.applicationData)
-          this.$router.push('/thank-you')
+          // show the duplicate entry messaging modal
+          // if there is an existing id in the store that
+          // matches the current form id BUT NOT if the
+          // route param id matches the current form id
+          // because this means the user is intending to 
+          // update their info (PUT simulation)
+          if (hasExistingName && appData.id !== this.routeParam) {
+            this.showModal = true
+          } else {
+            this.$store.dispatch('addApplication', appData)
+            this.$router.push('/thank-you')
+          }
         }
       })
     },
@@ -413,6 +449,7 @@ export default {
     },
     clearForm () {
       let appData = this.applicationData
+      appData.id = ''
       appData.firstName = ''
       appData.lastName = ''
       appData.categoryValue = ''
@@ -425,13 +462,15 @@ export default {
       appData.understanding = ''
     },
     populate () {
-      if (this.existingApplication.length) {
-        Object.assign(this.$data.applicationData, this.existingApplication[0])
-      }
+      Object.assign(this.applicationData, this.existingApplication[0])
     }
   },
   created () {
-    this.populate()
+    // populate form only if there is an existing entry id 
+    // in the store that matches the route param id
+    if (this.existingApplication.length) {
+      this.populate()
+    }
   }
 }
 </script>

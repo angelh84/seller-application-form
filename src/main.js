@@ -87,7 +87,7 @@ const settings = {
         secondary: 'text-gray-800 border border-gray-300  hover:text-gray-600',
         error: 'text-white bg-red-500 border border-transparent rounded hover:bg-red-600',
         success: 'text-white bg-green-500 border border-transparent rounded  hover:bg-green-600',
-        link: 'text-blue-500 underline hover:text-blue-600'
+        link: 'text-black'
       }
     }
   },
