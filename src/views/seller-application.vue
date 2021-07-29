@@ -182,13 +182,16 @@
       </fieldset>
       <fieldset v-if="currentStep === '2'">
         <div class="pb-6 relative">
-          <p>
+          <p class="leading-3">
             <label for="quality">When creating products to sell, which best describes your perspective on quality?</label>
             <t-select
               id="quality"
               v-model="applicationData.describeQuality"
               :variant="!applicationData.describeQuality.length && showValidation ? 'danger' : ''"
-              :class="{'text-cool-gray-8': applicationData.describeQuality === ''}"
+              :class="[
+                'mt-2',
+                { 'text-cool-gray-8': applicationData.describeQuality === '' }
+              ]"
               placeholder="Select Answer"
               :options="[
                 'I don’t care what it takes, my products are the highest quality possible', 
@@ -208,13 +211,16 @@
           </p>
         </div>
         <div class="pb-6 relative">
-          <p>
+          <p class="leading-3">
             <label for="experience">How would you describe your experience level as an online seller?</label>
             <t-select
               id="experience"
               v-model="applicationData.experience"
               :variant="!applicationData.experience.length && showValidation ? 'danger' : ''"
-              :class="{'text-cool-gray-8': applicationData.experience === ''}"
+              :class="[
+                'mt-2',
+                { 'text-cool-gray-8': applicationData.experience === '' }
+              ]"
               placeholder="Select Answer"
               :options="[
                 'I sell on multiple marketplaces and through my own website', 
@@ -234,13 +240,16 @@
           </p>
         </div>
         <div class="pb-6 relative">
-          <p>
+          <p class="leading-3">
             <label for="business-marketing-understanding">How would you describe your understanding of business and marketing?</label>
             <t-select
               id="business-marketing-understanding"
               v-model="applicationData.understanding"
               :variant="!applicationData.understanding.length && showValidation ? 'danger' : ''"
-              :class="{'text-cool-gray-8': applicationData.understanding === ''}"
+              :class="[
+                'mt-2',
+                { 'text-cool-gray-8': applicationData.understanding === '' }
+              ]"
               placeholder="Select Answer"
               :options="[
                 'I have an extensive background in business and/or marketing', 
