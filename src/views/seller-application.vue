@@ -182,7 +182,7 @@
       </fieldset>
       <fieldset v-if="currentStep === '2'">
         <div class="pb-6 relative">
-          <p class="leading-3">
+          <p class="leading-4">
             <label for="quality">When creating products to sell, which best describes your perspective on quality?</label>
             <t-select
               id="quality"
@@ -204,14 +204,14 @@
             <span
               ref="error2"
               v-if="!applicationData.describeQuality.length && showValidation"
-              class="absolute bottom-0 left-0 text-red-500"
+              class="absolute bottom-1 left-0 text-red-500"
             >
               <small>Required</small>
             </span>
           </p>
         </div>
         <div class="pb-6 relative">
-          <p class="leading-3">
+          <p class="leading-4">
             <label for="experience">How would you describe your experience level as an online seller?</label>
             <t-select
               id="experience"
@@ -233,14 +233,14 @@
             <span
               ref="error2"
               v-if="!applicationData.experience.length && showValidation"
-              class="absolute bottom-0 left-0 text-red-500"
+              class="absolute bottom-1 left-0 text-red-500"
             >
               <small>Required</small>
             </span>
           </p>
         </div>
         <div class="pb-6 relative">
-          <p class="leading-3">
+          <p class="leading-4">
             <label for="business-marketing-understanding">How would you describe your understanding of business and marketing?</label>
             <t-select
               id="business-marketing-understanding"
@@ -262,7 +262,7 @@
             <span
               ref="error2"
               v-if="!applicationData.understanding.length && showValidation"
-              class="absolute bottom-0 left-0 text-red-500"
+              class="absolute bottom-1 left-0 text-red-500"
             >
               <small>Required</small>
             </span>
@@ -322,6 +322,7 @@
 </template>
 
 <script>
+
 import Steps from '@/components/steps.vue'
 
 export default {
@@ -334,7 +335,6 @@ export default {
       showValidation: false,
       showModal: false,
       applicationData: {
-        id: '',
         firstName: '',
         lastName: '',
         categoryValue: '',
@@ -475,11 +475,59 @@ export default {
     }
   },
   created () {
+    
+
     // populate form only if there is an existing entry id 
     // in the store that matches the route param id
     if (this.existingApplication.length) {
       this.populate()
     }
+
+    // base('seller_application_form').create([
+    //   {
+    //     "fields": {
+    //       "firstName": "Angel",
+    //       "lastName": "Hernandez"
+    //     }
+    //   }
+    // ], function(err, records) {
+    //   if (err) {
+    //     console.error(err);
+    //     return;
+    //   }
+    //   records.forEach(function (record) {
+    //     console.log(record.getId());
+    //   });
+    // });    
+
+
+
+    // base('seller_application_form').find('recIGoybb4khgMOoi', function(err, record) {
+    //   if (err) { console.error(err); return; }
+    //   console.log('Retrieved', record.id);
+    // });
+
+   this.$base('seller_application_form').select({
+        // Selecting the first 3 records in Grid view:
+        maxRecords: 1,
+        view: "Grid view",
+        filterByFormula: "={firstName} = 'sdfsdfsdf'"
+    }).eachPage(function page(records) {
+        // This function (`page`) will get called for each page of records.
+
+        records.forEach(function(record) {
+            console.log('Retrieved', record.get('firstName'));
+        });
+
+        // To fetch the next page of records, call `fetchNextPage`.
+        // If there are more records, `page` will get called again.
+        // If there are no more records, `done` will get called.
+        // fetchNextPage();
+
+    }, function done(err) {
+        if (err) { console.error(err); return; }
+    });
+    
   }
 }
 </script>
