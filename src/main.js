@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import './tailwind.css'
 import VueTailwind from 'vue-tailwind'
-import Airtable from 'airtable'
+
 
 import {
   TInput,
@@ -15,8 +15,6 @@ import {
   TButton,
   TModal
 } from 'vue-tailwind/dist/components';
-
-Vue.prototype.$base = new Airtable({apiKey: 'keyW52kOyMMrEBN4l'}).base('appuT5k5suJ8mOVFH');
 
 const settings = {
   // Use the following syntax

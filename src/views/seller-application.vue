@@ -296,7 +296,7 @@
       v-model="showModal"
     >
       <template v-slot:default>
-        <p>It look like we already have an entry for <strong>{{ applicationData.firstName }} {{ applicationData.lastName }}</strong>, would you like to start over?</p>
+        <p>It look like we already have an application for <strong>{{ applicationData.portfolioUrl }}</strong>, we only allow one application submission per portfolio.</p>
       </template>
       <template v-slot:footer>
         <div class="flex justify-end">
@@ -306,14 +306,7 @@
             variant="link"
             @click="showModal = false"
           >
-            No
-          </t-button>
-          <t-button 
-            type="button"
-            class="font-semibold bg-mock-green pl-8 pr-8"
-            @click="duplicateEntry"
-          >
-            Yes, start over
+            Ok
           </t-button>
         </div>
       </template>
@@ -322,7 +315,7 @@
 </template>
 
 <script>
-
+import { httpClient } from '@/services'
 import Steps from '@/components/steps.vue'
 
 export default {
@@ -334,6 +327,7 @@ export default {
     return {
       showValidation: false,
       showModal: false,
+      isNewPortfolio: true,
       applicationData: {
         firstName: '',
         lastName: '',
@@ -349,12 +343,9 @@ export default {
     }
   },
   watch: {
-    $route () {
-      // only populate form if this is a new form
-      // and there is an existing entry id in the 
-      // store that matches the route param id
-      if (!this.applicationData.id && this.existingApplication.length) {
-        this.populate()
+    $route() {
+      if (this.currentStep === '2' && !this.applicationData.portfolioUrl.length) {
+        this.$router.push('step-1')
       }
     }
   },
@@ -405,56 +396,25 @@ export default {
   },
   methods: {
     nextClickHandler () {
+      let appData = this.applicationData
       this.showValidation = true
-      this.$nextTick(() => {
-        // if there are no errors, push the router to next step
+      this.$nextTick(async () => {
+        // If there are no form validation errors, check for 
+        // duplicate portfolio urls and if unique, send to step 2.
         if (!!(this.$refs.error1) === false) {
-          this.showValidation = false
-          this.$router.push('step-2')
+           const records = await this.checkPortfolio(appData.portfolioUrl)
+
+          if (!records.length) {
+            this.showValidation = false
+            this.$router.push('step-2')
+          } else {
+            this.showModal = true
+          }
         }
       })
     },
     backClickHandler () {
       this.$router.push('step-1')
-    },
-    submitClickHandler () {
-      let hasExistingName = false
-      let appData = this.applicationData
-      let firstName = appData.firstName.trim().toLowerCase()
-      let lastName = appData.lastName.trim().toLowerCase()
-
-      // TODO AJAX save to DB
-
-      // create form id by firstname-lastname
-      appData.id = `${firstName}-${lastName}`
-
-      // check to see if there are any existing entries in the store 
-      // that have the same id as the current form
-      hasExistingName = !!(this.applications.filter(app => app.id === appData.id).length)
-
-      this.showValidation = true
-      this.$nextTick(() => {
-        if (!!(this.$refs.error2) === false) {
-          this.showValidation = false
-          // show the duplicate entry messaging modal
-          // if there is an existing id in the store that
-          // matches the current form id BUT NOT if the
-          // route param id matches the current form id
-          // because this means the user is intending to 
-          // update their info (PUT simulation)
-          if (hasExistingName && appData.id !== this.routeParam) {
-            this.showModal = true
-          } else {
-            this.$store.dispatch('addApplication', appData)
-            this.$router.push('/thank-you')
-          }
-        }
-      })
-    },
-    duplicateEntry() {
-      this.showModal = false
-      this.clearForm()
-      this.backClickHandler()
     },
     clearForm () {
       let appData = this.applicationData
@@ -470,64 +430,36 @@ export default {
       appData.experience = ''
       appData.understanding = ''
     },
-    populate () {
-      Object.assign(this.applicationData, this.existingApplication[0])
+    createApplication (fieldsArg) {
+      return httpClient.createResource({
+        table: 'seller_application_form',
+        fields: fieldsArg
+      })
+    },
+    checkPortfolio(valueArg) {
+      return httpClient.readResource({
+        table: 'seller_application_form',
+        column: 'portfolioUrl',
+        value: valueArg
+      })
+    },
+    submitClickHandler () {
+      let appData = this.applicationData
+
+      this.showValidation = true
+      this.$nextTick(async () => {
+        if (!!(this.$refs.error2) === false) {
+          await this.createApplication(appData)
+          this.clearForm()
+          this.$router.push('/thank-you')
+        }
+      })
     }
   },
-  created () {
-    
-
-    // populate form only if there is an existing entry id 
-    // in the store that matches the route param id
-    if (this.existingApplication.length) {
-      this.populate()
+  async created () {
+    if (this.currentStep === '2' && !this.applicationData.portfolioUrl.length) {
+      this.$router.push('step-1')
     }
-
-    // base('seller_application_form').create([
-    //   {
-    //     "fields": {
-    //       "firstName": "Angel",
-    //       "lastName": "Hernandez"
-    //     }
-    //   }
-    // ], function(err, records) {
-    //   if (err) {
-    //     console.error(err);
-    //     return;
-    //   }
-    //   records.forEach(function (record) {
-    //     console.log(record.getId());
-    //   });
-    // });    
-
-
-
-    // base('seller_application_form').find('recIGoybb4khgMOoi', function(err, record) {
-    //   if (err) { console.error(err); return; }
-    //   console.log('Retrieved', record.id);
-    // });
-
-   this.$base('seller_application_form').select({
-        // Selecting the first 3 records in Grid view:
-        maxRecords: 1,
-        view: "Grid view",
-        filterByFormula: "={firstName} = 'sdfsdfsdf'"
-    }).eachPage(function page(records) {
-        // This function (`page`) will get called for each page of records.
-
-        records.forEach(function(record) {
-            console.log('Retrieved', record.get('firstName'));
-        });
-
-        // To fetch the next page of records, call `fetchNextPage`.
-        // If there are more records, `page` will get called again.
-        // If there are no more records, `done` will get called.
-        // fetchNextPage();
-
-    }, function done(err) {
-        if (err) { console.error(err); return; }
-    });
-    
   }
 }
 </script>
