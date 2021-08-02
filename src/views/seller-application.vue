@@ -23,7 +23,7 @@
               :variant="!applicationData.firstName.length && showValidation ? 'danger' : ''"
             />
             <span
-              ref="error1"
+              ref="error_firstName"
               v-if="!applicationData.firstName.length && showValidation"
               class="absolute bottom-0 left-0 text-red-500"
             >
@@ -40,7 +40,7 @@
               :variant="!applicationData.lastName.length && showValidation ? 'danger' : ''"
             />
             <span
-              ref="error1"
+              ref="error_lastName"
               v-if="!applicationData.lastName.length && showValidation"
               class="absolute bottom-0 left-1/2 pl-2 sm:pl-3 text-red-500"
             >
@@ -53,9 +53,9 @@
             <label for="category">Your Shop Category</label>
             <t-select
               id="cateogry"
-              v-model="applicationData.categoryValue"
-              :variant="!applicationData.categoryValue.length && showValidation ? 'danger' : ''"
-              :class="{'text-cool-gray-8': applicationData.categoryValue === ''}"
+              v-model="applicationData.shopCategory"
+              :variant="!applicationData.shopCategory.length && showValidation ? 'danger' : ''"
+              :class="{'text-cool-gray-8': applicationData.shopCategory === ''}"
               placeholder="Select Category"
               :options="[
                 'Graphics', 
@@ -68,8 +68,8 @@
               ]"
             ></t-select>
             <span
-              ref="error1"
-              v-if="!applicationData.categoryValue.length && showValidation"
+              ref="error_shopCategory"
+              v-if="!applicationData.shopCategory.length && showValidation"
               class="absolute bottom-0 left-0 text-red-500"
             >
               <small>Required</small>
@@ -82,20 +82,20 @@
             <t-input 
               id="portfolio-link" 
               v-model="applicationData.portfolioUrl" 
-              :variant="(!applicationData.portfolioUrl.length || !urlTest) && showValidation ? 'danger' : ''"
+              :variant="(!applicationData.portfolioUrl.length || !urlTest || duplicatePortfolio) && showValidation ? 'danger' : ''"
               name="portfolio-link"
             />
             <span
-              ref="error1"
-              v-if="(!applicationData.portfolioUrl.length || !urlTest) && showValidation"
+              ref="error_portfolioUrl"
+              v-if="(!applicationData.portfolioUrl.length || !urlTest || duplicatePortfolio) && showValidation"
               class="absolute bottom-0 left-0 text-red-500"
             >
-              <small>{{ !applicationData.portfolioUrl.length ? 'Required' : 'Not a properly formatted url'}}</small>
+              <small>{{ portfolioUrlValidationText }}</small>
             </span>
           </p>
         </div>
         <div 
-          v-if="urlTest"
+          v-if="urlTest && !duplicatePortfolio"
           class="pb-6 relative"
         >
           <p>
@@ -109,7 +109,7 @@
               <span class="ml-2 font-normal text-base">Yes, I confirm that the content I submit is authored by me.</span>
             </label>
             <span
-              ref="error1"
+              ref="error_isAuthor"
               v-if="!applicationData.isAuthor && showValidation"
               class="absolute bottom-0 left-0 text-red-500"
             >
@@ -139,7 +139,7 @@
               <span class="ml-2 font-normal text-base">No</span>
             </label>
             <span
-              ref="error1"
+              ref="error_hasOnlineStore"
               v-if="applicationData.hasOnlineStore === null && showValidation"
               class="absolute bottom-0 left-0 text-red-500"
             >
@@ -162,7 +162,7 @@
               class="h-20" 
             />
             <span
-              ref="error1"
+              ref="error_storeUrls"
               v-if="!applicationData.storeUrls && showValidation"
               class="absolute bottom-0 left-0 text-red-500"
             >
@@ -176,7 +176,16 @@
             class="font-semibold bg-mock-green w-full sm:w-40 sm:float-right"
             @click="nextClickHandler"
           >
-            Next
+            <span v-if="!showLoader">Next</span>
+            <svg
+              v-else
+              class="animate-spin mx-auto h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" 
+              fill="none" 
+              viewBox="0 0 24 24"
+            >
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
           </t-button>
         </div>
       </fieldset>
@@ -202,7 +211,7 @@
               ]"
             ></t-select>
             <span
-              ref="error2"
+              ref="error_describeQuality"
               v-if="!applicationData.describeQuality.length && showValidation"
               class="absolute bottom-1 left-0 text-red-500"
             >
@@ -231,7 +240,7 @@
               ]"
             ></t-select>
             <span
-              ref="error2"
+              ref="error_experience"
               v-if="!applicationData.experience.length && showValidation"
               class="absolute bottom-1 left-0 text-red-500"
             >
@@ -260,7 +269,7 @@
               ]"
             ></t-select>
             <span
-              ref="error2"
+              ref="error_understanding"
               v-if="!applicationData.understanding.length && showValidation"
               class="absolute bottom-1 left-0 text-red-500"
             >
@@ -290,27 +299,6 @@
         </div>
       </fieldset>
     </form>
-    <t-modal
-      header=""
-      :clickToClose="false"
-      v-model="showModal"
-    >
-      <template v-slot:default>
-        <p>It look like we already have an application for <strong>{{ applicationData.portfolioUrl }}</strong>, we only allow one application submission per portfolio.</p>
-      </template>
-      <template v-slot:footer>
-        <div class="flex justify-end">
-          <t-button 
-            type="button"
-            class="text-black bg-cool-gray-4 rounded mr-4 pl-8 pr-8"
-            variant="link"
-            @click="showModal = false"
-          >
-            Ok
-          </t-button>
-        </div>
-      </template>
-    </t-modal>
   </div>
 </template>
 
@@ -326,12 +314,13 @@ export default {
   data () {
     return {
       showValidation: false,
-      showModal: false,
       isNewPortfolio: true,
+      duplicatePortfolio: false,
+      showLoader: false,
       applicationData: {
         firstName: '',
         lastName: '',
-        categoryValue: '',
+        shopCategory: '',
         portfolioUrl: '',
         hasOnlineStore: null,
         isAuthor: null,
@@ -343,11 +332,16 @@ export default {
     }
   },
   watch: {
-    $route() {
+    $route () {
       if (this.currentStep === '2' && !this.applicationData.portfolioUrl.length) {
         this.$router.push('step-1')
       }
-    }
+    },
+    portfolioUrlText () {
+      if (this.duplicatePortfolio) {
+        this.duplicatePortfolio = false
+      }
+    },
   },
   computed: {
     routeParam () {
@@ -358,6 +352,19 @@ export default {
     },
     existingApplication () {
       return this.applications.filter(app => app.id === this.routeParam)
+    },
+    portfolioUrlValidationText () {
+      if (!this.applicationData.portfolioUrl.length) {
+        return 'Required'
+      } else if (!this.urlTest) {
+        return 'Not a properly formatted URL'
+      } else if (this.duplicatePortfolio) {
+        return 'URL exists, duplicate entries are not allowed.'
+      }
+      return ''
+    },
+    portfolioUrlText () {
+      return this.applicationData.portfolioUrl
     },
     stepsLength () {
       return this.$router.options.routes.filter(route => {
@@ -389,29 +396,61 @@ export default {
           }
       }
     },
-    urlTest() {
+    urlTest () {
       const validUrl = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi
       return validUrl.test(this.applicationData.portfolioUrl)
     }
   },
   methods: {
-    nextClickHandler () {
+    submitClickHandler () {
       let appData = this.applicationData
+
+      this.showValidation = true
+      this.$nextTick(async () => {
+        if (!Object.keys(this.filterForErrors()).length) {
+          this.showLoader = true
+          await this.createApplication(appData)
+          this.showLoader = false
+          this.clearForm()
+          this.$router.push('/thank-you')
+        }
+      })
+    },
+    nextClickHandler () {
+      let records;
+      let appData = this.applicationData
+
       this.showValidation = true
       this.$nextTick(async () => {
         // If there are no form validation errors, check for 
         // duplicate portfolio urls and if unique, send to step 2.
-        if (!!(this.$refs.error1) === false) {
-           const records = await this.checkPortfolio(appData.portfolioUrl)
+        if (!Object.keys(this.filterForErrors()).length) {
+          this.showLoader = true
+          records = await this.checkPortfolio(appData.portfolioUrl)
+          this.showLoader = false
 
           if (!records.length) {
             this.showValidation = false
             this.$router.push('step-2')
           } else {
-            this.showModal = true
+            this.duplicatePortfolio = true
+            this.showValidation = true
           }
         }
       })
+    },
+    filterForErrors() {
+      /* eslint-disable */
+      // Covert key/value pairs to array
+      const asArray = Object.entries(this.$refs)
+
+      // Use `filter()` to filter the key/value array
+      const isUndefined = asArray.filter(([key, value]) => {
+        return value !== undefined
+      })
+
+      // Convert the key/value array back to an object:
+      return Object.fromEntries(isUndefined)
     },
     backClickHandler () {
       this.$router.push('step-1')
@@ -421,7 +460,7 @@ export default {
       appData.id = ''
       appData.firstName = ''
       appData.lastName = ''
-      appData.categoryValue = ''
+      appData.shopCategory = ''
       appData.portfolioUrl = ''
       appData.hasOnlineStore = null
       appData.isAuthor = null
@@ -441,18 +480,6 @@ export default {
         table: 'seller_application_form',
         column: 'portfolioUrl',
         value: valueArg
-      })
-    },
-    submitClickHandler () {
-      let appData = this.applicationData
-
-      this.showValidation = true
-      this.$nextTick(async () => {
-        if (!!(this.$refs.error2) === false) {
-          await this.createApplication(appData)
-          this.clearForm()
-          this.$router.push('/thank-you')
-        }
       })
     }
   },
