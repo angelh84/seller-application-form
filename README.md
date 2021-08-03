@@ -35,7 +35,9 @@ d. I wrote the markup while gradually styling elements.  Once I finished desktop
 
 e. I added front-end validation to all form fields, if there are any missing fields on either step, the app does not let the user proceed and visually cue's the missing required fields.
 
-f. I attempted to sign up and setup a Fauna DB but was unsuccessful after a legthy attempt so I decided to 'fake' the storing of data locally by using Vuex. 
+~~f. I attempted to sign up and setup a Fauna DB but was unsuccessful after a legthy attempt so I decided to 'fake' the storing of data locally by using Vuex. ~~
+
+f. I was able to hook up the app to airtables, much easier to use interface and removed the duplicate entry validation from the second step over to the first step.  Instead of a modal notifying the user of a duplicate entry by Portfolio URL, they see a validation error on the actual portfolio url field.
 
 ## CRUD
 
@@ -53,6 +55,8 @@ f. I attempted to sign up and setup a Fauna DB but was unsuccessful after a legt
 
 ## Conclusion
 
-Hooking the data up to an endpoint would be trivial at this point, the problem was getting Fauna DB to work locally for me but setting up a fetch / axios call to save, retrieve and update this information would be simple.
+~~Hooking the data up to an endpoint would be trivial at this point, the problem was getting Fauna DB to work locally for me but setting up a fetch / axios call to save, retrieve and update this information would be simple.~~
+
+With more time I would clean up my code by creating reusable form components with built in validation as well as adding in the 'vue-sanatize' package to sanatize the information sent to the DB.  Lastly I would also animate scrollTo the first validation error on mobile since on mobile the screen size is too small to notice any potential validation errors above the fold. 
 
 Thanks for reading.
