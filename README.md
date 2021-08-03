@@ -41,17 +41,21 @@ f. I was able to hook up the app to airtables, much easier to use interface and 
 
 ## CRUD
 
-*NOTE - Hard refresh removes the state of the app since this information is not being saved or retrieved from an api (would love to have a conversation about what I missed when attempting to setup a Fauna DB).
+<strike>*NOTE - Hard refresh removes the state of the app since this information is not being saved or retrieved from an api (would love to have a conversation about what I missed when attempting to setup a Fauna DB).</strike>
+
+*NOTE - I am using the portfolio URL as the identifier.
 
 1. Create: A user can be created with all required fields and will land on the thank you page. 
 
-2. Read: Once on the thank you page, the logo can be clicked to arrive back on step 1. To populate existing information, update the url by replacing the /new/ part of the url to /{firstName-lastName}/.  So for me it would be /angel-hernandez/, or whatever first and last name that was used.
+2. If the user attempts to submit the form with an existing portfolio url, the app will throw a validation error on the portfolio url field.
 
-3. Update: Once you have completed step 2, the form should be populated with the corresponding information and will allow you to update any fields and save the form all over again.  
+<strike>2. Read: Once on the thank you page, the logo can be clicked to arrive back on step 1. To populate existing information, update the url by replacing the /new/ part of the url to /{firstName-lastName}/.  So for me it would be /angel-hernandez/, or whatever first and last name that was used.</strike>
 
-*NOTE -- This only happens if there is an existing name in the url that matches with an existing form in the local store. 
+<strike>3. Update: Once you have completed step 2, the form should be populated with the corresponding information and will allow you to update any fields and save the form all over again.</strike>
 
-**NOTE -- If on the /new/ route and the user attempts to create a new user with an existing first and last name, the app will throw a modal on submission that lets the user know that there is an existing entry with the same name.
+<strike>*NOTE -- This only happens if there is an existing name in the url that matches with an existing form in the local store. </strike>
+
+<strike>**NOTE -- If on the /new/ route and the user attempts to create a new user with an existing first and last name, the app will throw a modal on submission that lets the user know that there is an existing entry with the same name.</strike>
 
 ## Conclusion
 
