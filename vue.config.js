@@ -8,5 +8,6 @@ module.exports = {
       },
       extensions: ['.js', '.vue', '.json']
     }
-  }
+  },
+  assetsDir: "application-form"
 }
